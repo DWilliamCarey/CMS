@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AngularCMS</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- vendor css -->
+  <link href="assets/lib/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="assets/lib/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="assets/lib/typicons.font/typicons.css" rel="stylesheet">
+  <link href="assets/lib/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+
+  <!-- azia CSS -->
+  <link rel="stylesheet" href="assets/css/cms.css">
+
+</head>
+<body class="az-body">
+  <app-root></app-root>
+
+    <script src="assets/lib/jquery/jquery.min.js"></script>
+    <script src="assets/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/lib/ionicons/ionicons.js"></script>
+    <script src="assets/lib/jquery.flot/jquery.flot.js"></script>
+    <script src="assets/lib/jquery.flot/jquery.flot.categories.js"></script>
+    <script src="assets/lib/jquery.flot/jquery.flot.resize.js"></script>
+    <script src="assets/lib/flot.curvedlines/curvedLines.js"></script>
+
+    <script src="assets/js/cms.js"></script>
+    <script src="assets/js/dashboard.sampledata.js"></script>
+    <script src="assets/js/chart.flot.sampledata.js"></script>
+
+    <script>
+
+      $(function(){
+        'use strict'
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        // colored tooltip
+        $('[data-toggle="tooltip-primary"]').tooltip({
+          template: '<div class="tooltip tooltip-primary" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        });
+
+        $('[data-toggle="tooltip-secondary"]').tooltip({
+          template: '<div class="tooltip tooltip-secondary" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+        });
+
+
+        
+
+        $('.az-iconbar .nav-link').on('click', function(e){
+          e.preventDefault();
+
+          $(this).addClass('active');
+          $(this).siblings().removeClass('active');
+
+          $('.az-iconbar-aside').addClass('show');
+
+          var targ = $(this).attr('href');
+          $(targ).addClass('show');
+          $(targ).siblings().removeClass('show');
+        });
+
+        $('.az-iconbar-body .with-sub').on('click', function(e){
+          e.preventDefault();
+          $(this).parent().toggleClass('show');
+          $(this).parent().siblings().removeClass('show');
+        });
+
+        $('.az-iconbar-toggle-menu').on('click', function(e){
+          e.preventDefault();
+
+          if(window.matchMedia('(min-width: 992px)').matches) {
+            $('.az-iconbar .nav-link.active').removeClass('active');
+            $('.az-iconbar-aside').removeClass('show');
+          } else {
+            $('body').removeClass('az-iconbar-show');
+          }
+        })
+
+        $('#azIconbarShow').on('click', function(e){
+          e.preventDefault();
+          $('body').toggleClass('az-iconbar-show');
+
+          var targ = $('.az-iconbar .nav-link.active').attr('href');
+          $(targ).addClass('show');
+        });
+
+        $(document).bind('click touchstart', function(e){
+          e.stopPropagation();
+
+          var azContent = $(e.target).closest('.az-content').length;
+          var azIconBarMenu = $(e.target).closest('.az-header-menu-icon').length;
+
+          if(azContent) {
+            $('.az-iconbar-aside').removeClass('show');
+
+            // for mobile
+            if(!azIconBarMenu) {
+              $('body').removeClass('az-iconbar-show');
+            }
+          }
+        });
+
+      });
+    </script>
+</body>
+</html>
